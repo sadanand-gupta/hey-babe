@@ -35,7 +35,7 @@
 
         /* General Container Styling */
         .content-container {
-            /* padding: 20px 30px 40px; */
+            /* padding: 20px 30px 40px; */ /* Handled by media query for more control */
             border-radius: 20px;
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
             text-align: center;
@@ -44,10 +44,11 @@
             z-index: 1;
             opacity: 0;
             transform: scale(0.8) translateY(50px);
-            /* background-color: rgba(255, 255, 255, 0.88); */
+            /* background-color: rgba(255, 255, 255, 0.88); */ /* Optional background */
             backdrop-filter: blur(5px);
             margin-bottom: 30px; /* Space for potential fixed elements */
             transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            padding: 20px 30px 40px; /* Default padding */
         }
         .content-container.visible {
             opacity: 1;
@@ -59,7 +60,7 @@
             transform: scale(0.9) translateY(20px);
             pointer-events: none;
         }
-        @keyframes popInAndUpContainer { /* Renamed to avoid conflict */
+        @keyframes popInAndUpContainer {
             0% { opacity: 0; transform: scale(0.8) translateY(50px); }
             100% { opacity: 1; transform: scale(1) translateY(0); }
         }
@@ -74,8 +75,7 @@
         #birthday-content-container .main-title::before { /* Glitter Effect */
             content: "Happy Birthday"; position: absolute; left: 0; top: 0;
             width: 100%; height: 100%;
-            background: linear-gradient(45deg, var(--accent-color), #fff, 
-            var(--accent-color));
+            background: linear-gradient(45deg, var(--accent-color), #fff, var(--accent-color));
             background-size: 200% 200%; -webkit-background-clip: text; background-clip: text;
             color: transparent; animation: glitterShine 3s infinite linear 1s;
             opacity: 0; animation-delay: 1.5s; /* Delay for glitter */
@@ -118,7 +118,7 @@
         @keyframes fadeInSimple { to { opacity: 1; } }
 
         #birthday-content-container .cake-section { margin-top: 30px; opacity: 0; animation: fadeInSimple 1s ease-in 5.5s forwards; }
-        #birthday-content-container .birthday-cake { width: 100px; animation: cakeSway 2.5s infinite ease-in-out 6s; }
+        #birthday-content-container .birthday-cake { width: 300px; animation: cakeSway 2.5s infinite ease-in-out 6s; }
         @keyframes cakeSway {
             0%, 100% { transform: translateY(0) rotate(0deg); }
             25% { transform: translateY(-10px) rotate(-5deg); }
@@ -150,6 +150,7 @@
             border-radius: 50px; cursor: pointer;
             box-shadow: 0 6px 15px rgba(0,0,0,0.3);
             transition: background-color 0.3s, transform 0.2s;
+            margin: 10px;
         }
         .modal-popup button:hover {
             background-color: var(--primary-color); transform: scale(1.05);
@@ -158,6 +159,7 @@
         /* Stage 3: Image Slider Styles */
         #image-slider-area {
             max-width: 700px; /* Wider for slider */
+            /* Padding is already handled by .content-container */
         }
         .slider {
             position: relative;
@@ -183,6 +185,22 @@
             object-fit: contain; /* Show whole image, letterbox if needed */
             display: block;
         }
+        .btn-other{
+            /* Style for this button if needed, or remove if it's a placeholder */
+            margin-top: 15px;
+            padding: 10px 20px;
+            font-size: 1em;
+            border-radius: 20px;
+            border: none;
+            cursor: pointer;
+            /* color: rgb(17, 208, 238);  Provided in HTML, can be overridden if needed */
+            /* background-color: burlywood; Provided in HTML, can be overridden if needed */
+            transition: transform 0.2s;
+        }
+        .btn-other:hover {
+            transform: scale(1.05);
+        }
+
         .slider-btn {
             position: absolute;
             top: 50%;
@@ -192,14 +210,17 @@
             border: none;
             padding: 10px 12px;
             cursor: pointer;
-            border-radius: 50%;
+            border-radius: 10%;
             font-size: 1.5em;
             z-index: 10;
             transition: background-color 0.3s;
+            /* Adjusted margin-top from previous code, check if it's still needed or if translateY(-50%) is enough */
+            /* margin-top: 108px; REMOVED - translateY(-50%) should center it vertically relative to parent*/
         }
-        .slider-btn:hover { background-color: rgba(0, 0, 0, 0.7); }
-        .slider-btn.prev { left: 10px; }
-        .slider-btn.next { right: 10px; }
+        .slider-btn:hover { background-color: rgba(126, 2, 74, 0.7); }
+        .slider-btn.prev { left: 10px; /* background-color: rgba(126, 2, 74, 0.7); color: rgb(255, 255, 255); Redundant from inline */ }
+        .slider-btn.next { right: 10px; /* background-color: rgba(126, 2, 74, 0.7); color: rgb(255, 255, 255); Redundant from inline */ }
+
         .slider-dots {
             text-align: center;
             padding: 10px 0;
@@ -241,6 +262,28 @@
             background-repeat: no-repeat; opacity: 0; z-index: 1; user-select: none;
         }
 
+        /* Countdown Timer Display */
+        #countdown-timer-display {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: rgba(0, 0, 0, 0.6);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.9em;
+            z-index: 1001; /* Ensure it's above most things but below the modal */
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+            display: none; /* Initially hidden, will be shown by JS */
+        }
+        #countdown-timer-display.visible {
+            display: block;
+            opacity: 1;
+        }
+
+
         @media (max-width: 600px) {
             body { padding-top: 2vh; }
             .content-container { padding: 15px 20px 30px; }
@@ -254,11 +297,13 @@
             .orbiting-butterfly { width: 35px; height: 28px; }
             .slider-btn { font-size: 1.2em; padding: 8px 10px;}
             .dot { height: 10px; width: 10px; }
+            #countdown-timer-display { font-size: 0.8em; padding: 6px 10px; bottom:10px; right:10px; }
         }
     </style>
 </head>
 <body>
     <div class="animation-layer"></div>
+    <div id="countdown-timer-display"></div> <!-- Countdown Timer Element -->
 
     <!-- Stage 1: Main Birthday Content -->
     <div class="content-container" id="birthday-content-container">
@@ -270,24 +315,34 @@
             <img src="IMG-20250509-WA0017.jpg" alt="Photo of Gunapooshini MJ" class="friend-photo">
             <p class="photo-caption">My Dearest Bestie!</p>
         </section>
-        <section class="message-section">
-            <p class="message-line line1">Wishing you the most MOO-velous birthday ever, filled with joy, laughter, and unforgettable moments!</p>
-            <p class="message-line line2">You make the world a brighter and more beautiful place just by being in it, Gunapooshini!</p>
-            <p class="message-line line3">May all your dreams take flight and your wishes come true today and always.</p>
-            <p class="message-line line4">So incredibly lucky and grateful to call you my best friend. Udderly amazing! ❤️</p>
-            <p class="message-line line5">Cheers to you and another year of amazing adventures together!</p>
-            <p class="message-line signature">- Your Bestie, Jii</p>
+                       <section class="message-section">
+            <p class="message-line line1">Happiest Birthday to my <strong>super</strong> bestie, Gunapooshini!</p>
+            <p class="message-line line2">Wishing you a <strong>semma</strong> unique and special day, <strong>di</strong>! 🎉</p>
+
+            <p class="message-line line3" style="margin-top: 25px; font-style: italic;">Awww, <strong>romba</strong> cute-ah irukku! 💕 Calling you “Octopus🐙🥰”</p>
+
+            <p class="message-line line4" style="font-weight: bold; margin-top: 15px; color: var(--secondary-color);">Why I call you my Octopus <strong></strong> 🌸</p>
+            <p class="message-line line5" style="text-align: left; margin-left: 10%; margin-right: 10%;">1️⃣ <strong>Gentle Soul:</strong> An octopus feels soft and smooth, <strong>like something you’d want to hold carefully</strong>! So soft and comforting, like an octopus.</p>
+            <p class="message-line line6" style="text-align: left; margin-left: 10%; margin-right: 10%;">2️⃣ <strong>Endless Comfort :</strong> octopus has eight arms, neyum supportive, <strong>di</strong>.</p>
+            <p class="message-line line7" style="text-align: left; margin-left: 10%; margin-right: 10%;">3️⃣ <strong>Strong Grip :</strong> They hold on tight whom, they love , care maybe also crush😅😅 <strong>care about, whether it’s people, dreams, or feelings</strong>.</p>
+            <p class="message-line line8" style="text-align: left; margin-left: 10%; margin-right: 10%;">4️⃣ <strong>Bright Mind (Arivu Power):</strong> Incredibly smart and full of wonderful surprises, <strong>chance-ey illa</strong>! Just like a clever octopus.</p>
+            <p class="message-line line9" style="text-align: left; margin-left: 10%; margin-right: 10%;">5️⃣ <strong>Uniquely You (Thaniyaana Style):</strong> Graceful, one-of-a-kind, and totally unforgettable – that's my Octopus! <strong>Vera level</strong>!</p>
+
+            <p class="message-line signature">- Your Jii (Unnoda Gundu Bestie 😉)</p>
         </section>
         <div class="cake-section">
-            <img src="https://www.transparentpng.com/thumb/birthday-cake/birthday-cake-slice-icing-png-image-Uh9O7O.png" alt="Birthday Cake Slice" class="birthday-cake">
-            <p>Let's celebrate you!</p>
-        </div>
+    <img src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExZDJ6b3RxM3Rwb2kxbDlnbmpva2tsdG54eDU3MXp3eTByZXY3dTc2NSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/H1N2N62RrpCTccAYQ5/giphy.gif" 
+         alt="Birthday Celebration GIF" 
+         class="birthday-cake">
+</div>
+
     </div>
 
     <!-- Stage 2: "Dei Gundu Ready?" Popup -->
     <div id="gundu-popup" class="modal-popup">
-        <h2>Dei Gundu, Ready?</h2>
-        <button id="gundu-ready-button">Yes da!</button>
+        <h2>Dei... Gundu, Next pakalama?</h2>
+        <button id="gundu-ready-button">YEs😍😍</button>
+        <button id="gundu-no-button">Ne modu anuku teriyum 😅</button>
     </div>
 
     <!-- Stage 3: Image Slider Area -->
@@ -297,18 +352,19 @@
             <div class="slides" id="slider-slides-container">
                 <!-- Slides will be injected here -->
             </div>
-            <button class="slider-btn prev" id="slider-prev-btn">❮</button>
-            <button class="slider-btn next" id="slider-next-btn">❯</button>
+            <button class="slider-btn prev" id="slider-prev-btn" style="background-color: rgba(126, 2, 74, 0.7); color: rgb(255, 255, 255);">❯Back❮</button>
+            <button class="slider-btn next" id="slider-next-btn" style="background-color: rgba(126, 2, 74, 0.7); color: rgb(255, 255, 255);">❯Next❮</button>
             <div class="slider-dots" id="slider-dots-container">
                 <!-- Dots will be injected here -->
             </div>
         </div>
+         <button class="btn-other" style="color: rgb(17, 208, 238); background-color: burlywood; margin-top: 20px;">╭❤️～other photos of us╭❤️～</button>
     </div>
 
     <script>
     document.addEventListener('DOMContentLoaded', () => {
         const animationLayer = document.querySelector('.animation-layer');
-        const friendPhoto = document.querySelector('.friend-photo'); // For orbiting butterflies
+        const friendPhoto = document.querySelector('.friend-photo');
 
         // Stage 1 elements
         const birthdayContentContainer = document.getElementById('birthday-content-container');
@@ -317,6 +373,7 @@
         // Stage 2 elements
         const gunduPopup = document.getElementById('gundu-popup');
         const gunduReadyButton = document.getElementById('gundu-ready-button');
+        const gunduNoButton = document.getElementById('gundu-no-button');
 
         // Stage 3 elements
         const imageSliderArea = document.getElementById('image-slider-area');
@@ -325,83 +382,141 @@
         const prevBtn = document.getElementById('slider-prev-btn');
         const nextBtn = document.getElementById('slider-next-btn');
 
+        // Countdown element
+        const countdownDisplay = document.getElementById('countdown-timer-display');
+        let countdownInterval;
+
         const sliderImages = [
-            "IMG-20250509-WA0017.jpg",
-            "IMG_20231129_155744.jpg", // Removed !
-            "IMG-20231009-WA0025.jpg", // Removed !
-            "IMG-20240619-WA0002.jpg"  // Removed !
+            "IMG-20250509-WA0017.jpg", // Assuming this is the same as friend-photo for example
+            "IMG_20231129_155744.jpg",
+            "IMG-20231009-WA0025.jpg",
+            "IMG-20240619-WA0002.jpg"
         ];
         let currentSlide = 0;
         let slideElements = [];
         let dotElements = [];
 
         let orbitingButterflies = [];
-        let STAGE1_DURATION = 20000; // 20 seconds for stage 1 before popup
+        let STAGE1_DURATION = 30000; // 20 seconds (20000 ms) for popup to appear
         let stage1Timer;
 
         // --- INITIALIZATION ---
         function initApp() {
             startStage1();
-            initBackgroundAnimations(); // Start general background animations
+            initBackgroundAnimations();
         }
+
+        // --- COUNTDOWN TIMER ---
+        function startCountdownTimer(durationMs) {
+            if (!countdownDisplay) return;
+
+            countdownDisplay.classList.add('visible');
+            let timeLeft = Math.ceil(durationMs / 1000);
+
+            const updateTimer = () => {
+                if (timeLeft > 0) {
+                    countdownDisplay.innerHTML = `Next surprise in: ${timeLeft}s`;
+                    timeLeft--;
+                } else {
+                    countdownDisplay.innerHTML = `Loading surprise...`;
+                    clearInterval(countdownInterval);
+                    setTimeout(() => {
+                        if (countdownDisplay) {
+                             countdownDisplay.classList.remove('visible');
+                             setTimeout(() => { // Ensure display:none after fade
+                                if (countdownDisplay) countdownDisplay.style.display = 'none';
+                             } , 500);
+                        }
+                    }, 1000);
+                }
+            };
+            updateTimer();
+            countdownInterval = setInterval(updateTimer, 1000);
+        }
+
+        function stopCountdownTimer() {
+            clearInterval(countdownInterval);
+            if (countdownDisplay) {
+                countdownDisplay.classList.remove('visible');
+                setTimeout(() => { // Ensure display:none after fade
+                    if (countdownDisplay) countdownDisplay.style.display = 'none';
+                } , 500);
+            }
+        }
+
 
         // --- STAGE 1: BIRTHDAY CONTENT ---
         function startStage1() {
             birthdayContentContainer.classList.add('visible');
-
-            // Animate message lines (already setup with CSS delays, but ensure class for JS control if needed)
             let messageDelay = 2800;
             messageLines.forEach((line, index) => {
                 setTimeout(() => { line.classList.add('visible'); }, messageDelay + index * 800);
             });
-
-            setTimeout(launchConfetti, 800); // Initial confetti burst for stage 1
-            initOrbitingButterflies(); // Butterflies around the main photo
-
-            // Timer to transition to Stage 2
-            clearTimeout(stage1Timer); // Clear any existing timer
+            setTimeout(launchConfetti, 800);
+            initOrbitingButterflies();
+            clearTimeout(stage1Timer);
             stage1Timer = setTimeout(showGunduPopup, STAGE1_DURATION);
+            startCountdownTimer(STAGE1_DURATION);
         }
 
         // --- STAGE 2: GUNDU POPUP ---
         function showGunduPopup() {
-            gunduPopup.classList.add('visible');
+            stopCountdownTimer();
+            // Ensure popup is display:flex before adding 'visible' class if it was 'none'
+            if (gunduPopup.style.display === 'none' || gunduPopup.style.display === '') {
+                 gunduPopup.style.display = 'flex'; // As defined in your CSS
+            }
+            // Short delay to allow display property to apply before opacity transition
+            setTimeout(() => {
+                gunduPopup.classList.add('visible');
+            }, 10);
         }
 
         gunduReadyButton.addEventListener('click', () => {
+            stopCountdownTimer();
             gunduPopup.classList.remove('visible');
-            // Wait for popup to fade out
             setTimeout(() => {
                 gunduPopup.style.display = 'none';
                 transitionToStage3();
-            }, 500); // Matches popup transition
+            }, 500);
         });
+
+        if (gunduNoButton) {
+            gunduNoButton.addEventListener('click', () => {
+                stopCountdownTimer();
+                gunduPopup.classList.remove('visible');
+                setTimeout(() => {
+                    gunduPopup.style.display = 'none';
+                }, 500);
+                clearTimeout(stage1Timer); // Prevent popup from auto-showing again if "No" is clicked
+            });
+        } else {
+            console.error("Button with ID 'gundu-no-button' not found.");
+        }
+
 
         // --- STAGE 3: IMAGE SLIDER ---
         function transitionToStage3() {
-            // Hide Stage 1 content
             birthdayContentContainer.classList.remove('visible');
             birthdayContentContainer.classList.add('hidden-fade');
-            setTimeout(() => { // After fade out
+            setTimeout(() => {
                  birthdayContentContainer.style.display = 'none';
-            }, 800);
+            }, 800); // Matches .hidden-fade transition
 
-
-            // Show Stage 3 content
-            imageSliderArea.style.display = 'block'; // Make it block before adding visible class
-            setTimeout(() => { // Allow display change to render
+            imageSliderArea.style.display = 'block';
+            // Short delay to allow display property to apply before opacity transition
+            setTimeout(() => {
                  imageSliderArea.classList.add('visible');
             }, 50);
 
-
             setupSlider();
             updateSlider();
-            setTimeout(launchConfetti, 500); // Confetti for slider reveal
+            setTimeout(launchConfetti, 500);
         }
 
         function setupSlider() {
-            slidesContainer.innerHTML = ''; // Clear previous
-            dotsContainer.innerHTML = '';   // Clear previous
+            slidesContainer.innerHTML = '';
+            dotsContainer.innerHTML = '';
             slideElements = [];
             dotElements = [];
 
@@ -424,6 +539,7 @@
                 dotsContainer.appendChild(dot);
                 dotElements.push(dot);
             });
+            updateSlider(); // Call once after setup to show the first slide
         }
 
         function updateSlider() {
@@ -520,9 +636,12 @@
             let styleSheet = document.getElementById('dynamic-animations-style-sheet');
             if (!styleSheet) { styleSheet = document.createElement('style'); styleSheet.id = 'dynamic-animations-style-sheet'; document.head.appendChild(styleSheet); }
             try {
-                styleSheet.sheet.insertRule(keyframes, styleSheet.sheet.cssRules.length);
-                butterfly.style.animation = `${animName} ${9 + Math.random() * 8}s linear forwards`;
-            } catch (e) {
+                if (styleSheet.sheet) { // Check if sheet is accessible (not blocked by CORS for local files)
+                    styleSheet.sheet.insertRule(keyframes, styleSheet.sheet.cssRules.length);
+                    butterfly.style.animation = `${animName} ${9 + Math.random() * 8}s linear forwards`;
+                } else { throw new Error("Stylesheet not accessible"); }
+            } catch (e) { // Fallback for local files or other issues
+                 console.warn("Could not insert CSS rule for butterfly, using WAAPI fallback.", e);
                  butterfly.animate([
                     { transform: `translate(0px, 0px) rotate(0deg) scaleX(1) scale(${scale})`, opacity: 1 },
                     { transform: `translate(${startX < 0 ? window.innerWidth + 150 : -(window.innerWidth + 150)}px, ${Math.random() * 200 - 100}px) rotate(30deg) scaleX(-1) scale(${scale})`, opacity: 0 }
@@ -567,44 +686,45 @@
         }
         function createOrbitingButterfly(startAngle = 0) {
             const b = document.createElement('div'); b.classList.add('orbiting-butterfly');
-            animationLayer.appendChild(b); // Add to general animation layer
+            animationLayer.appendChild(b);
             orbitingButterflies.push({
                 el: b, angle: startAngle,
                 speed: (Math.random() * 0.01 + 0.01) * (Math.random() < 0.5 ? 1 : -1),
-                radiusX: friendPhoto.offsetWidth * 0.6 + Math.random() * 20,
-                radiusY: friendPhoto.offsetHeight * 0.5 + Math.random() * 15,
+                radiusX: (friendPhoto.offsetWidth || 180) * 0.6 + Math.random() * 20, // Fallback for offsetWidth
+                radiusY: (friendPhoto.offsetHeight || 180) * 0.5 + Math.random() * 15, // Fallback for offsetHeight
                 flutterFreq: Math.random() * 3 + 2, flutterAmp: Math.random() * 10 + 5,
                 currentScaleX: 1
             });
         }
         let lastPhotoRect = null; let photoCenterX, photoCenterY;
         function updatePhotoCenter() {
-            if (!friendPhoto || friendPhoto.offsetParent === null) { // Check if photo is visible
-                orbitingButterflies.forEach(b => b.el.style.opacity = '0'); // Hide if photo not visible
+            if (!friendPhoto || friendPhoto.offsetParent === null) {
+                orbitingButterflies.forEach(b => b.el.style.opacity = '0');
                 return false;
             }
-            orbitingButterflies.forEach(b => b.el.style.opacity = '0.9'); // Show if photo visible
+            orbitingButterflies.forEach(b => b.el.style.opacity = '0.9');
             const rect = friendPhoto.getBoundingClientRect();
-            if (rect.width === 0 || rect.height === 0) return false;
+            if (rect.width === 0 || rect.height === 0) return false; // Photo not yet rendered or hidden
+            // Recalculate center if photo moved significantly
             if (!lastPhotoRect || Math.abs(rect.left - lastPhotoRect.left) > 1 || Math.abs(rect.top - lastPhotoRect.top) > 1) {
-                 photoCenterX = rect.left + rect.width / 2;
-                 photoCenterY = rect.top + rect.height / 2;
+                 photoCenterX = rect.left + window.scrollX + rect.width / 2;  // Add scrollX/Y for correct absolute positioning
+                 photoCenterY = rect.top + window.scrollY + rect.height / 2;
                  lastPhotoRect = rect;
             }
             return true;
         }
         function animateOrbitingButterflies() {
-            if (!updatePhotoCenter() && orbitingButterflies.some(b => !b.el.style.left)) {
+            if (!updatePhotoCenter() && orbitingButterflies.some(b => !b.el.style.left)) { // If center not updated & butterflies not positioned
                 requestAnimationFrame(animateOrbitingButterflies); return;
             }
             orbitingButterflies.forEach(b => {
-                if (b.el.style.opacity === '0') return; // Don't animate if hidden
+                if (b.el.style.opacity === '0') return;
                 b.angle += b.speed;
                 const flutter = Math.sin(b.angle * b.flutterFreq) * b.flutterAmp;
                 const x = photoCenterX + b.radiusX * Math.cos(b.angle) - (b.el.offsetWidth / 2);
                 const y = photoCenterY + b.radiusY * Math.sin(b.angle) + flutter - (b.el.offsetHeight / 2);
                 b.el.style.left = `${x}px`; b.el.style.top = `${y}px`;
-                const direction = -Math.sin(b.angle) * b.speed;
+                const direction = -Math.sin(b.angle) * b.speed; // Check if it's moving left or right
                 if (direction > 0.001 && b.currentScaleX !== 1) { b.el.style.transform = 'scaleX(1)'; b.currentScaleX = 1; }
                 else if (direction < -0.001 && b.currentScaleX !== -1) { b.el.style.transform = 'scaleX(-1)'; b.currentScaleX = -1; }
             });
