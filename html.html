@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Special Surprise for Gunapooshini MJ!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;700&family=Lobster&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #e91e63; /* Hot Pink */
+            --secondary-color: #ff5722; /* Bright Orange */
+            --accent-color: #ffc107; /* Amber for glitter */
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 50%, #fbc2eb 100%);
+            animation: animatedBackground 20s ease infinite alternate;
+            color: #333;
+            overflow-x: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Start content from top */
+            min-height: 100vh;
+            padding-top: 3vh; /* Initial padding */
+            box-sizing: border-box;
+        }
+
+        @keyframes animatedBackground {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* General Container Styling */
+        .content-container {
+            /* padding: 20px 30px 40px; */
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+            text-align: center;
+            max-width: 650px; /* Adjusted max-width */
+            width: 90%;
+            z-index: 1;
+            opacity: 0;
+            transform: scale(0.8) translateY(50px);
+            /* background-color: rgba(255, 255, 255, 0.88); */
+            backdrop-filter: blur(5px);
+            margin-bottom: 30px; /* Space for potential fixed elements */
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .content-container.visible {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+            animation: popInAndUpContainer 1.2s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+        }
+        .content-container.hidden-fade {
+            opacity: 0;
+            transform: scale(0.9) translateY(20px);
+            pointer-events: none;
+        }
+        @keyframes popInAndUpContainer { /* Renamed to avoid conflict */
+            0% { opacity: 0; transform: scale(0.8) translateY(50px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+
+        /* Stage 1: Birthday Content Styles */
+        #birthday-content-container header .main-title {
+            font-family: 'Pacifico', cursive; font-size: 3.2em; color: var(--primary-color);
+            margin-bottom: 0; text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            position: relative; opacity: 0; animation: textEntry 1s ease-out 0.5s forwards;
+        }
+        #birthday-content-container .main-title::before { /* Glitter Effect */
+            content: "Happy Birthday"; position: absolute; left: 0; top: 0;
+            width: 100%; height: 100%;
+            background: linear-gradient(45deg, var(--accent-color), #fff, 
+            var(--accent-color));
+            background-size: 200% 200%; -webkit-background-clip: text; background-clip: text;
+            color: transparent; animation: glitterShine 3s infinite linear 1s;
+            opacity: 0; animation-delay: 1.5s; /* Delay for glitter */
+        }
+        @keyframes glitterShine {
+            0% { background-position: 200% 50%; opacity: 0.7;}
+            50% { background-position: 0% 50%; opacity: 1;}
+            100% { background-position: -200% 50%; opacity: 0.7;}
+        }
+        #birthday-content-container header .friend-name {
+            font-family: 'Lobster', cursive; font-size: 2.8em; color: var(--secondary-color);
+            margin-top: 5px; opacity: 0; transform: translateY(-20px);
+            animation: dropInSlightly 1s ease-out 1s forwards;
+        }
+        @keyframes textEntry {
+            0% { opacity: 0; transform: scale(0.5) rotate(-10deg); }
+            100% { opacity: 1; transform: scale(1) rotate(0deg); }
+        }
+        @keyframes dropInSlightly { to { opacity: 1; transform: translateY(0); } }
+
+        #birthday-content-container .photo-section { margin: 25px 0; }
+        #birthday-content-container .friend-photo {
+            width: 180px; height: 180px; border-radius: 50%; object-fit: cover;
+            border: 6px solid #fff; box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            opacity: 0; transform: scale(0.5);
+            animation: popInPhoto 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55) 1.5s forwards;
+        }
+        @keyframes popInPhoto { to { opacity: 1; transform: scale(1); } }
+        #birthday-content-container .photo-caption {
+            font-size: 1.1em; color: #555; margin-top: 10px; font-weight: bold;
+            opacity: 0; animation: fadeInSimple 1s ease-in 2.3s forwards;
+        }
+        #birthday-content-container .message-section p {
+            font-size: 1.1em; line-height: 1.6; color: #444; margin: 10px 0;
+            opacity: 0; transform: translateY(20px);
+        }
+        #birthday-content-container .message-section .signature { font-style: italic; font-weight: bold; color: var(--primary-color); margin-top: 20px; }
+        #birthday-content-container .message-line.visible { animation: fadeInUpMessage 0.8s ease-out forwards; }
+        @keyframes fadeInUpMessage { to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeInSimple { to { opacity: 1; } }
+
+        #birthday-content-container .cake-section { margin-top: 30px; opacity: 0; animation: fadeInSimple 1s ease-in 5.5s forwards; }
+        #birthday-content-container .birthday-cake { width: 100px; animation: cakeSway 2.5s infinite ease-in-out 6s; }
+        @keyframes cakeSway {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-10px) rotate(-5deg); }
+            75% { transform: translateY(-5px) rotate(5deg); }
+        }
+
+        /* Stage 2: "Dei Gundu Ready?" Popup */
+        .modal-popup {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7);
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            z-index: 1000;
+            opacity: 0; visibility: hidden;
+            transition: opacity 0.5s ease-out, visibility 0s linear 0.5s;
+            text-align: center; padding: 20px;
+        }
+        .modal-popup.visible {
+            opacity: 1; visibility: visible;
+            transition: opacity 0.5s ease-out;
+        }
+        .modal-popup h2 {
+            font-family: 'Lobster', cursive; font-size: 2.8em; color: #fff;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.5); margin-bottom: 30px;
+        }
+        .modal-popup button {
+            font-family: 'Poppins', sans-serif; font-size: 1.5em; padding: 15px 30px;
+            background-color: var(--secondary-color); color: white; border: none;
+            border-radius: 50px; cursor: pointer;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        .modal-popup button:hover {
+            background-color: var(--primary-color); transform: scale(1.05);
+        }
+
+        /* Stage 3: Image Slider Styles */
+        #image-slider-area {
+            max-width: 700px; /* Wider for slider */
+        }
+        .slider {
+            position: relative;
+            width: 100%;
+            max-width: 500px; /* Max width of the slider itself */
+            margin: 0 auto;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+        .slides {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+        .slide {
+            min-width: 100%;
+            box-sizing: border-box;
+        }
+        .slide img {
+            width: 100%;
+            height: auto; /* Maintain aspect ratio */
+            max-height: 60vh; /* Limit image height */
+            object-fit: contain; /* Show whole image, letterbox if needed */
+            display: block;
+        }
+        .slider-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.4);
+            color: white;
+            border: none;
+            padding: 10px 12px;
+            cursor: pointer;
+            border-radius: 50%;
+            font-size: 1.5em;
+            z-index: 10;
+            transition: background-color 0.3s;
+        }
+        .slider-btn:hover { background-color: rgba(0, 0, 0, 0.7); }
+        .slider-btn.prev { left: 10px; }
+        .slider-btn.next { right: 10px; }
+        .slider-dots {
+            text-align: center;
+            padding: 10px 0;
+        }
+        .dot {
+            cursor: pointer;
+            height: 12px;
+            width: 12px;
+            margin: 0 5px;
+            background-color: #bbb;
+            border-radius: 50%;
+            display: inline-block;
+            transition: background-color 0.3s ease;
+        }
+        .dot.active { background-color: var(--primary-color); }
+
+
+        /* General Animation Layer & Elements */
+        .animation-layer {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 0;
+        }
+        .flower { position: absolute; font-size: 20px; opacity: 0.7; user-select: none;}
+        .butterfly {
+            position: absolute; width: 50px; height: 40px;
+            background-image: url('https://www.transparentpng.com/thumb/butterfly/colorful-butterfly-hd-picture-images-cIAAbU.png');
+            background-size: contain; background-repeat: no-repeat; opacity: 0;
+            will-change: transform, opacity; user-select: none;
+        }
+        .orbiting-butterfly { /* For stage 1 photo */
+            position: absolute; width: 40px; height: 32px;
+            background-image: url('https://www.transparentpng.com/thumb/butterfly/butterfly-transparent-picture-0nPA7F.png');
+            background-size: contain; background-repeat: no-repeat;
+            opacity: 0.9; z-index: 2; will-change: transform, opacity;
+        }
+        .confetti { position: absolute; width: 10px; height: 10px; opacity: 1; transform-origin: center; user-select: none;}
+        .happy-cow {
+            position: absolute; width: 70px; height: 60px; background-size: contain;
+            background-repeat: no-repeat; opacity: 0; z-index: 1; user-select: none;
+        }
+
+        @media (max-width: 600px) {
+            body { padding-top: 2vh; }
+            .content-container { padding: 15px 20px 30px; }
+            #birthday-content-container header .main-title { font-size: 2.5em; }
+            #birthday-content-container header .friend-name { font-size: 2.2em; }
+            #birthday-content-container .friend-photo { width: 150px; height: 150px; }
+            #birthday-content-container .message-section p { font-size: 1em; }
+            .modal-popup h2 { font-size: 2.2em; }
+            .modal-popup button { font-size: 1.2em; padding: 12px 25px; }
+            .happy-cow { width: 50px; height: 40px; }
+            .orbiting-butterfly { width: 35px; height: 28px; }
+            .slider-btn { font-size: 1.2em; padding: 8px 10px;}
+            .dot { height: 10px; width: 10px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="animation-layer"></div>
+
+    <!-- Stage 1: Main Birthday Content -->
+    <div class="content-container" id="birthday-content-container">
+        <header>
+            <h1 class="main-title">Happy Birthday</h1>
+            <h2 class="friend-name">Gunapooshini MJ!</h2>
+        </header>
+        <section class="photo-section">
+            <img src="IMG-20250509-WA0017.jpg" alt="Photo of Gunapooshini MJ" class="friend-photo">
+            <p class="photo-caption">My Dearest Bestie!</p>
+        </section>
+        <section class="message-section">
+            <p class="message-line line1">Wishing you the most MOO-velous birthday ever, filled with joy, laughter, and unforgettable moments!</p>
+            <p class="message-line line2">You make the world a brighter and more beautiful place just by being in it, Gunapooshini!</p>
+            <p class="message-line line3">May all your dreams take flight and your wishes come true today and always.</p>
+            <p class="message-line line4">So incredibly lucky and grateful to call you my best friend. Udderly amazing! ❤️</p>
+            <p class="message-line line5">Cheers to you and another year of amazing adventures together!</p>
+            <p class="message-line signature">- Your Bestie, Jii</p>
+        </section>
+        <div class="cake-section">
+            <img src="https://www.transparentpng.com/thumb/birthday-cake/birthday-cake-slice-icing-png-image-Uh9O7O.png" alt="Birthday Cake Slice" class="birthday-cake">
+            <p>Let's celebrate you!</p>
+        </div>
+    </div>
+
+    <!-- Stage 2: "Dei Gundu Ready?" Popup -->
+    <div id="gundu-popup" class="modal-popup">
+        <h2>Dei Gundu, Ready?</h2>
+        <button id="gundu-ready-button">Yes da!</button>
+    </div>
+
+    <!-- Stage 3: Image Slider Area -->
+    <div class="content-container" id="image-slider-area" style="display: none;">
+         <h2 style="font-family: 'Lobster', cursive; color: var(--primary-color); font-size: 2.5em; margin-bottom:20px;">More Memories!</h2>
+        <div class="slider">
+            <div class="slides" id="slider-slides-container">
+                <!-- Slides will be injected here -->
+            </div>
+            <button class="slider-btn prev" id="slider-prev-btn">❮</button>
+            <button class="slider-btn next" id="slider-next-btn">❯</button>
+            <div class="slider-dots" id="slider-dots-container">
+                <!-- Dots will be injected here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const animationLayer = document.querySelector('.animation-layer');
+        const friendPhoto = document.querySelector('.friend-photo'); // For orbiting butterflies
+
+        // Stage 1 elements
+        const birthdayContentContainer = document.getElementById('birthday-content-container');
+        const messageLines = birthdayContentContainer.querySelectorAll('.message-section .message-line');
+
+        // Stage 2 elements
+        const gunduPopup = document.getElementById('gundu-popup');
+        const gunduReadyButton = document.getElementById('gundu-ready-button');
+
+        // Stage 3 elements
+        const imageSliderArea = document.getElementById('image-slider-area');
+        const slidesContainer = document.getElementById('slider-slides-container');
+        const dotsContainer = document.getElementById('slider-dots-container');
+        const prevBtn = document.getElementById('slider-prev-btn');
+        const nextBtn = document.getElementById('slider-next-btn');
+
+        const sliderImages = [
+            "IMG-20250509-WA0017.jpg",
+            "IMG_20231129_155744.jpg", // Removed !
+            "IMG-20231009-WA0025.jpg", // Removed !
+            "IMG-20240619-WA0002.jpg"  // Removed !
+        ];
+        let currentSlide = 0;
+        let slideElements = [];
+        let dotElements = [];
+
+        let orbitingButterflies = [];
+        let STAGE1_DURATION = 20000; // 20 seconds for stage 1 before popup
+        let stage1Timer;
+
+        // --- INITIALIZATION ---
+        function initApp() {
+            startStage1();
+            initBackgroundAnimations(); // Start general background animations
+        }
+
+        // --- STAGE 1: BIRTHDAY CONTENT ---
+        function startStage1() {
+            birthdayContentContainer.classList.add('visible');
+
+            // Animate message lines (already setup with CSS delays, but ensure class for JS control if needed)
+            let messageDelay = 2800;
+            messageLines.forEach((line, index) => {
+                setTimeout(() => { line.classList.add('visible'); }, messageDelay + index * 800);
+            });
+
+            setTimeout(launchConfetti, 800); // Initial confetti burst for stage 1
+            initOrbitingButterflies(); // Butterflies around the main photo
+
+            // Timer to transition to Stage 2
+            clearTimeout(stage1Timer); // Clear any existing timer
+            stage1Timer = setTimeout(showGunduPopup, STAGE1_DURATION);
+        }
+
+        // --- STAGE 2: GUNDU POPUP ---
+        function showGunduPopup() {
+            gunduPopup.classList.add('visible');
+        }
+
+        gunduReadyButton.addEventListener('click', () => {
+            gunduPopup.classList.remove('visible');
+            // Wait for popup to fade out
+            setTimeout(() => {
+                gunduPopup.style.display = 'none';
+                transitionToStage3();
+            }, 500); // Matches popup transition
+        });
+
+        // --- STAGE 3: IMAGE SLIDER ---
+        function transitionToStage3() {
+            // Hide Stage 1 content
+            birthdayContentContainer.classList.remove('visible');
+            birthdayContentContainer.classList.add('hidden-fade');
+            setTimeout(() => { // After fade out
+                 birthdayContentContainer.style.display = 'none';
+            }, 800);
+
+
+            // Show Stage 3 content
+            imageSliderArea.style.display = 'block'; // Make it block before adding visible class
+            setTimeout(() => { // Allow display change to render
+                 imageSliderArea.classList.add('visible');
+            }, 50);
+
+
+            setupSlider();
+            updateSlider();
+            setTimeout(launchConfetti, 500); // Confetti for slider reveal
+        }
+
+        function setupSlider() {
+            slidesContainer.innerHTML = ''; // Clear previous
+            dotsContainer.innerHTML = '';   // Clear previous
+            slideElements = [];
+            dotElements = [];
+
+            sliderImages.forEach((src, index) => {
+                const slideDiv = document.createElement('div');
+                slideDiv.classList.add('slide');
+                const img = document.createElement('img');
+                img.src = src;
+                img.alt = `Memory ${index + 1}`;
+                slideDiv.appendChild(img);
+                slidesContainer.appendChild(slideDiv);
+                slideElements.push(slideDiv);
+
+                const dot = document.createElement('span');
+                dot.classList.add('dot');
+                dot.addEventListener('click', () => {
+                    currentSlide = index;
+                    updateSlider();
+                });
+                dotsContainer.appendChild(dot);
+                dotElements.push(dot);
+            });
+        }
+
+        function updateSlider() {
+            slidesContainer.style.transform = `translateX(-${currentSlide * 100}%)`;
+            dotElements.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentSlide);
+            });
+            prevBtn.disabled = currentSlide === 0;
+            nextBtn.disabled = currentSlide === sliderImages.length - 1;
+        }
+
+        prevBtn.addEventListener('click', () => {
+            if (currentSlide > 0) {
+                currentSlide--;
+                updateSlider();
+            }
+        });
+        nextBtn.addEventListener('click', () => {
+            if (currentSlide < sliderImages.length - 1) {
+                currentSlide++;
+                updateSlider();
+            }
+        });
+
+
+        // --- GENERAL BACKGROUND ANIMATIONS ---
+        function initBackgroundAnimations() {
+            setInterval(createFlower, 300);
+            setTimeout(() => createButterfly(), 1200);
+            setInterval(createButterfly, 5500 + Math.random() * 2000);
+            setTimeout(() => createHappyCow(), 2200);
+            setInterval(createHappyCow, 6500 + Math.random() * 3000);
+        }
+
+        function launchConfetti() {
+            const confettiCount = 200;
+            const colors = ['#f94144', '#f3722c', '#f8961e', '#f9c74f', '#90be6d', '#43aa8b', '#577590'];
+            for (let i = 0; i < confettiCount; i++) { createConfettiParticle(); }
+            function createConfettiParticle() {
+                const confetti = document.createElement('div'); confetti.classList.add('confetti');
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                const startX = window.innerWidth / 2; const startY = window.innerHeight / 2;
+                confetti.style.left = startX + 'px'; confetti.style.top = startY + 'px';
+                const angle = Math.random() * Math.PI * 2; const velocity = Math.random() * 150 + 150;
+                const endX = startX + Math.cos(angle) * velocity * (Math.random() * 2 + 1);
+                const endY = startY + Math.sin(angle) * velocity * (Math.random() * 2 + 1) + (window.innerHeight * 0.3);
+                const rotation = Math.random() * 720 - 360; const duration = Math.random() * 2 + 1.5;
+                animationLayer.appendChild(confetti);
+                confetti.animate([
+                    { transform: `translate(0, 0) rotate(0deg) scale(1)`, opacity: 1 },
+                    { transform: `translate(${endX - startX}px, ${endY - startY}px) rotate(${rotation}deg) scale(0.5)`, opacity: 0 }
+                ], { duration: duration * 1000, easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)', fill: 'forwards' });
+                setTimeout(() => confetti.remove(), duration * 1000 + 100);
+            }
+        }
+        const flowerEmojis = ['🌸', '🌺', '🌹', '🌷', '💖', '✨', '🎉', '🎈', '🎁', '🦋', '🌟'];
+        function createFlower() {
+            const flower = document.createElement('div'); flower.classList.add('flower');
+            flower.innerHTML = flowerEmojis[Math.floor(Math.random() * flowerEmojis.length)];
+            flower.style.left = Math.random() * 100 + 'vw'; flower.style.top = '-50px';
+            flower.style.fontSize = Math.random() * 25 + 20 + 'px';
+            flower.style.opacity = Math.random() * 0.5 + 0.5;
+            const fallDuration = Math.random() * 12 + 10; const swayX = (Math.random() - 0.5) * 250;
+            const rotation = Math.random() * 720 - 360;
+            animationLayer.appendChild(flower);
+            flower.animate([
+                { transform: `translateY(0px) translateX(0px) rotate(0deg)`, opacity: flower.style.opacity },
+                { transform: `translateY(${window.innerHeight + 70}px) translateX(${swayX}px) rotate(${rotation}deg)`, opacity: 0 }
+            ], { duration: fallDuration * 1000, easing: 'linear', fill: 'forwards' });
+            setTimeout(() => flower.remove(), fallDuration * 1000 + 500);
+        }
+        function createButterfly() {
+            const butterfly = document.createElement('div'); butterfly.classList.add('butterfly');
+            animationLayer.appendChild(butterfly);
+            const startX = Math.random() < 0.5 ? -80 : window.innerWidth + 30;
+            const startY = Math.random() * (window.innerHeight * 0.7) + (window.innerHeight * 0.15);
+            butterfly.style.left = startX + 'px'; butterfly.style.top = startY + 'px';
+            butterfly.style.opacity = '1'; const scale = Math.random() * 0.5 + 0.7;
+            butterfly.style.transform = `scale(${scale})`;
+            const animName = `fly_anim_dyn_${Date.now()}_${Math.random().toString(36).substr(2, 5)}`;
+            let keyframes = `@keyframes ${animName} { 0% { transform: translate(0, 0) rotate(0deg) scaleX(1) scale(${scale}); opacity: 1; }`;
+            let currentX = 0; let currentY = 0; const numPoints = 5 + Math.floor(Math.random() * 4);
+            for (let i = 1; i <= numPoints; i++) {
+                const percent = (100 / numPoints) * i; let nextX, nextY;
+                const moveXBase = (window.innerWidth / numPoints) * 1.3;
+                if (startX < 0) { nextX = currentX + moveXBase + (Math.random() * 200 - 100); }
+                else { nextX = currentX - moveXBase + (Math.random() * 200 - 100); }
+                nextY = currentY + (Math.random() * 250 - 125);
+                const rotate = Math.random() * 80 - 40; const scaleXVal = Math.random() < 0.4 ? -1 : 1;
+                keyframes += `${percent*0.9}% { transform: translate(${nextX}px, ${nextY}px) rotate(${rotate}deg) scaleX(${scaleXVal}) scale(${scale}); }`;
+                currentX = nextX; currentY = nextY;
+            }
+            keyframes += `100% { transform: translate(${currentX + (startX < 0 ? 150 : -150)}px, ${currentY + (Math.random() * 150 - 75)}px) rotate(${Math.random()*40-20}deg) scaleX(${Math.random() < 0.5 ? 1 : -1}) scale(${scale}); opacity: 0; } }`;
+            let styleSheet = document.getElementById('dynamic-animations-style-sheet');
+            if (!styleSheet) { styleSheet = document.createElement('style'); styleSheet.id = 'dynamic-animations-style-sheet'; document.head.appendChild(styleSheet); }
+            try {
+                styleSheet.sheet.insertRule(keyframes, styleSheet.sheet.cssRules.length);
+                butterfly.style.animation = `${animName} ${9 + Math.random() * 8}s linear forwards`;
+            } catch (e) {
+                 butterfly.animate([
+                    { transform: `translate(0px, 0px) rotate(0deg) scaleX(1) scale(${scale})`, opacity: 1 },
+                    { transform: `translate(${startX < 0 ? window.innerWidth + 150 : -(window.innerWidth + 150)}px, ${Math.random() * 200 - 100}px) rotate(30deg) scaleX(-1) scale(${scale})`, opacity: 0 }
+                ], { duration: (12 + Math.random() * 6) * 1000, easing: 'linear', fill: 'forwards' });
+            }
+            setTimeout(() => butterfly.remove(), (9 + Math.random() * 8) * 1000 + 500);
+        }
+        const happyCowImageUrls = [
+            'https://www.transparentpng.com/thumb/cow/cartoon-cow-transparent-image-k cardiology-nJ0fBa.png',
+            'https://www.transparentpng.com/thumb/cow/baby-cow-transparent-png-image-d95Sok.png',
+            'https://www.pngkey.com/png/full/8-83473_cow-cartoon-png-transparent-images-cow-cartoon.png'
+        ];
+        function createHappyCow() {
+            const cow = document.createElement('div'); cow.classList.add('happy-cow');
+            const randomCowImg = happyCowImageUrls[Math.floor(Math.random() * happyCowImageUrls.length)];
+            cow.style.backgroundImage = `url('${randomCowImg}')`; animationLayer.appendChild(cow);
+            let startX, startY, endX, endY; const side = Math.random();
+            const scale = Math.random() * 0.3 + 0.7; cow.style.transform = `scale(${scale})`;
+            if (side < 0.33) { startX = -100; startY = Math.random() * (window.innerHeight - 100) + 50; endX = window.innerWidth + 100; endY = startY + (Math.random() * 200 - 100); }
+            else if (side < 0.66) { startX = window.innerWidth + 100; startY = Math.random() * (window.innerHeight - 100) + 50; endX = -100; endY = startY + (Math.random() * 200 - 100); }
+            else { startX = Math.random() * window.innerWidth; startY = Math.random() < 0.5 ? -100 : window.innerHeight + 100; endX = startX + (Math.random() * 400 - 200); endY = startY < 0 ? window.innerHeight + 100 : -100; }
+            cow.style.left = startX + 'px'; cow.style.top = startY + 'px'; cow.style.opacity = '1';
+            const duration = 10 + Math.random() * 8;
+            cow.animate([
+                { transform: `translate(0,0) rotate(0deg) scale(${scale})`, opacity: 1},
+                { transform: `translate(${(endX - startX) * 0.25}px, ${(endY - startY) * 0.25}px) rotate(${Math.random()*10-5}deg) scale(${scale})`, offset: 0.25},
+                { transform: `translate(${(endX - startX) * 0.5}px, ${(endY - startY) * 0.5}px) rotate(${Math.random()*15-7.5}deg) scale(${scale})`, offset: 0.5},
+                { transform: `translate(${(endX - startX) * 0.75}px, ${(endY - startY) * 0.75}px) rotate(${Math.random()*10-5}deg) scale(${scale})`, offset: 0.75},
+                { transform: `translate(${endX - startX}px, ${endY - startY}px) rotate(${Math.random()*20-10}deg) scale(${scale})`, opacity: 0}
+            ], { duration: duration * 1000, easing: 'cubic-bezier(0.25, 0.1, 0.25, 1.0)', fill: 'forwards' });
+            setTimeout(() => cow.remove(), duration * 1000 + 500);
+        }
+
+        // --- ORBITING BUTTERFLIES (for Stage 1 photo) ---
+        function initOrbitingButterflies() {
+            if (!friendPhoto) return;
+            const numOrbitingButterflies = 3;
+            for (let i = 0; i < numOrbitingButterflies; i++) {
+                createOrbitingButterfly(i * ((2 * Math.PI) / numOrbitingButterflies));
+            }
+            if (orbitingButterflies.length > 0) animateOrbitingButterflies();
+        }
+        function createOrbitingButterfly(startAngle = 0) {
+            const b = document.createElement('div'); b.classList.add('orbiting-butterfly');
+            animationLayer.appendChild(b); // Add to general animation layer
+            orbitingButterflies.push({
+                el: b, angle: startAngle,
+                speed: (Math.random() * 0.01 + 0.01) * (Math.random() < 0.5 ? 1 : -1),
+                radiusX: friendPhoto.offsetWidth * 0.6 + Math.random() * 20,
+                radiusY: friendPhoto.offsetHeight * 0.5 + Math.random() * 15,
+                flutterFreq: Math.random() * 3 + 2, flutterAmp: Math.random() * 10 + 5,
+                currentScaleX: 1
+            });
+        }
+        let lastPhotoRect = null; let photoCenterX, photoCenterY;
+        function updatePhotoCenter() {
+            if (!friendPhoto || friendPhoto.offsetParent === null) { // Check if photo is visible
+                orbitingButterflies.forEach(b => b.el.style.opacity = '0'); // Hide if photo not visible
+                return false;
+            }
+            orbitingButterflies.forEach(b => b.el.style.opacity = '0.9'); // Show if photo visible
+            const rect = friendPhoto.getBoundingClientRect();
+            if (rect.width === 0 || rect.height === 0) return false;
+            if (!lastPhotoRect || Math.abs(rect.left - lastPhotoRect.left) > 1 || Math.abs(rect.top - lastPhotoRect.top) > 1) {
+                 photoCenterX = rect.left + rect.width / 2;
+                 photoCenterY = rect.top + rect.height / 2;
+                 lastPhotoRect = rect;
+            }
+            return true;
+        }
+        function animateOrbitingButterflies() {
+            if (!updatePhotoCenter() && orbitingButterflies.some(b => !b.el.style.left)) {
+                requestAnimationFrame(animateOrbitingButterflies); return;
+            }
+            orbitingButterflies.forEach(b => {
+                if (b.el.style.opacity === '0') return; // Don't animate if hidden
+                b.angle += b.speed;
+                const flutter = Math.sin(b.angle * b.flutterFreq) * b.flutterAmp;
+                const x = photoCenterX + b.radiusX * Math.cos(b.angle) - (b.el.offsetWidth / 2);
+                const y = photoCenterY + b.radiusY * Math.sin(b.angle) + flutter - (b.el.offsetHeight / 2);
+                b.el.style.left = `${x}px`; b.el.style.top = `${y}px`;
+                const direction = -Math.sin(b.angle) * b.speed;
+                if (direction > 0.001 && b.currentScaleX !== 1) { b.el.style.transform = 'scaleX(1)'; b.currentScaleX = 1; }
+                else if (direction < -0.001 && b.currentScaleX !== -1) { b.el.style.transform = 'scaleX(-1)'; b.currentScaleX = -1; }
+            });
+            requestAnimationFrame(animateOrbitingButterflies);
+        }
+
+        // Start the application
+        initApp();
+    });
+    </script>
+</body>
+</html>
